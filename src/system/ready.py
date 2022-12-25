@@ -2,7 +2,7 @@ import discord
 
 
 async def ready(client):
-    activity = discord.Game(name='Free Fire', type=3)
+    activity = discord.Game(name='Minecraft', type=3)
 
     await client.change_presence(
         status=discord.Status.online,

@@ -1,16 +1,30 @@
 import discord
 from discord.ext import commands
-from googlesearch import search
+
 import random
 from numpy import number
+from googlesearch import search
 
 from src.system.json import *
 from src.system.directories import *
 
 
 BOT = dict(read_json(DIR_SECRET))
-intents = discord.Intents.all()
-bot = commands.Bot(command_prefix = BOT["command_prefix"], case_insensitive = True, intents=intents)
+
+class Bot(commands.Bot):
+    def __init__(self):
+        intents = discord.Intents.all()
+
+        super().__init__(command_prefix=BOT["command_prefix"], case_insensitive=True, intents=intents)
+        self.synced = False
+
+    async def on_ready(self):
+        await self.wait_until_ready()
+
+        if not self.synced:
+            self.synced = True
+
+bot = Bot()
 
 
 @bot.command(name='calcular', help='Calculadora simples.')
@@ -44,8 +58,24 @@ async def google(ctx, *args):
 
 @bot.command(name='gerar_senha', help='Gera senhas aleatorias para você.')
 async def gerar_senha(ctx, tam:int):
-    caracters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()!'
-    await ctx.send(f'Senha gerada: **{"".join(random.sample(caracters, tam))}**')
+    try:
+        caracters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()!'
+        await ctx.author.send(f'Senha gerada: **{"".join(random.sample(caracters, tam))}**')
+        await ctx.send('Sua senha foi lhe informada no privado!')
+    except discord.errors.Forbidden:
+        await ctx.send('Infelizmente não consigo lhe enviar mensagens privadas!')
+
+
+@bot.command(aliases=["apaga"])
+async def clear(ctx, amount=99):
+    if ctx.author.guild_permissions.administrator:
+        message = f'Mensagens apagadas com sucesso!\n\n**Total de mensagens apagadas: {amount}**'
+        await ctx.channel.purge(limit=amount+1)
+        await ctx.send(message, delete_after=20)
+    else:
+        no_permission = 'Você não tem permissão para usar esse comando!'
+        embed = discord.Embed(title=f'{no_permission}')
+        await ctx.send(embed=embed)
 
 
 bot.run(BOT["TOKEN"])

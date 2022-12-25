@@ -1,16 +1,17 @@
 import threading
 
 import discord
-import json
+from discord import app_commands
 
-from googlesearch import search
 import random
 from numpy import number
+from googlesearch import search
 
 
 app = {
     "client": "app/client.py",
     "bot": "app/bot.py",
+    "tree": "app/tree.py",
 }
 
 
