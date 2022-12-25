@@ -1,28 +1,30 @@
+import threading
+
 import discord
 import json
 
-from src.system.json import *
-from src.system.directories import *
-from src.system.ready import *
-
-from src.reply.defaults import *
-
-intents = discord.Intents.all()
-client = discord.Client(intents=intents)
+from googlesearch import search
+import random
+from numpy import number
 
 
-@client.event
-async def on_ready():
-    await ready(client)
+app = {
+    "client": "app/client.py",
+    "bot": "app/bot.py",
+}
 
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
+def run_file(filename):
+    exec(open(filename).read())
 
-    await defaults(message)
+for i in app:
+    print(f'Inicializando: {i}')
 
+    if i == "client":
+        continue
+    run = threading.Thread(target=run_file, args=(app[i],))
+    run.start()
 
-bot = dict(read_json(DIR_SECRET))
-client.run(bot["TOKEN"])
+print('\nInicialização completa!')
+
+exec(open(app["client"]).read())
