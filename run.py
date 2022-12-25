@@ -11,7 +11,6 @@ from googlesearch import search
 app = {
     "client": "app/client.py",
     "bot": "app/bot.py",
-    "tree": "app/tree.py",
 }
 
 

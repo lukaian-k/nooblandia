@@ -36,17 +36,6 @@ async def calcular(ctx, n1:int, operacao, n2:int):
     await ctx.send(f'A {resultado[1]} dos número foi: {resultado[0]}')
 
 
-@bot.command(name='imc', help='Calculadora de imc.')
-async def imc(ctx, peso:float, altura:float):
-    resultado = peso/(altura*altura)
-    if (resultado >= 18.5 and resultado <= 24.9): await ctx.send('Seu estado atual é: Peso Normal')
-    elif (resultado >= 25 and resultado <= 29.9): await ctx.send('Seu estado atual é: Sobrepeso')
-    elif (resultado >= 30 and resultado <= 34.9): await ctx.send('Seu estado atual é: Obesidade I')
-    elif (resultado >= 35 and resultado <= 39.9): await ctx.send('Seu estado atual é: Obesidade II')
-    elif (resultado >= 40 and resultado <= 49.9): await ctx.send('Seu estado atual é: Obesidade III')
-    elif (resultado >= 50): await ctx.send('Seu estado atual é: Obesidade IV')
-    elif (resultado < 18.5): await ctx.send('Seu estado atual é: Abaixo do peso')
-    await ctx.send(f'Esse foi o resultado do seu IMC: {resultado}\nSe você estiver abaixo ou acima do peso normal, procure um médico!')
 
 
 @bot.command(name='google', help='Pesquise rápido no google pelo discord!', aliases=['g','pesquise'])
@@ -56,17 +45,26 @@ async def google(ctx, *args):
         print(await ctx.send(str(i)))
 
 
-@bot.command(name='gerar_senha', help='Gera senhas aleatorias para você.')
-async def gerar_senha(ctx, tam:int):
+@bot.command(
+    name='gerar_senha',
+    help='Gera senhas aleatorias para você.',
+    aliases=["gs","senha"],
+)
+async def gerar_senha(ctx, tam:int=16):
     try:
         caracters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()!'
         await ctx.author.send(f'Senha gerada: **{"".join(random.sample(caracters, tam))}**')
         await ctx.send('Sua senha foi lhe informada no privado!')
+        
     except discord.errors.Forbidden:
         await ctx.send('Infelizmente não consigo lhe enviar mensagens privadas!')
 
 
-@bot.command(aliases=["apaga"])
+@bot.command(
+    name='clear',
+    help='Limpa até 100 mensagens do Chat.',
+    aliases=["apaga","apagar","c"],
+)
 async def clear(ctx, amount=99):
     if ctx.author.guild_permissions.administrator:
         message = f'Mensagens apagadas com sucesso!\n\n**Total de mensagens apagadas: {amount}**'
