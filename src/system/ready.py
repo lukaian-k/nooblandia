@@ -2,11 +2,14 @@ import discord
 
 
 async def ready(client):
-    activity = discord.Game(name='Minecraft', type=3)
+    activity = {
+        "game": discord.Game(name='Minecraft', type=3),
+        "listening": discord.Activity(type=discord.ActivityType.listening, name="Here Always (SEUNGMIN of Stray Kids)"),
+    }
 
     await client.change_presence(
         status=discord.Status.online,
-        activity=activity
+        activity=activity["listening"]
     )
 
     print(f'Init: {client.user.name}')

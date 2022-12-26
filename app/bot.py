@@ -34,9 +34,7 @@ async def calcular(ctx, n1:int, operacao, n2:int):
     elif operacao == '*': resultado = [n1*n2]; resultado += ['multiplicação']
     elif operacao == '/': resultado = [n1/n2]; resultado += ['divisão']
     await ctx.send(f'A {resultado[1]} dos número foi: {resultado[0]}')
-
-
-
+    
 
 @bot.command(name='google', help='Pesquise rápido no google pelo discord!', aliases=['g','pesquise'])
 async def google(ctx, *args):
