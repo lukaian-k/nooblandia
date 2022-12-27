@@ -7,6 +7,9 @@ import random
 from numpy import number
 from googlesearch import search
 
+import io
+from PIL import Image, ImageFont, ImageDraw, ImageOps
+
 
 app = {
     "client": "app/client.py",

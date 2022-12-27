@@ -8,6 +8,7 @@ from src.system.ready import *
 from src.reply.defaults import *
 
 from src.tree.imc import *
+from src.tree.ship import *
 
 
 BOT = dict(read_json(DIR_SECRET))
@@ -42,11 +43,20 @@ async def on_message(message):
 
 @tree.command(name='imc', description='Calculadora de imc.')
 @app_commands.describe(
-    peso = "Insira o seu Peso.",
-    altura = "Insira a sua Altura.",
+    peso="Insira o seu Peso.",
+    altura="Insira a sua Altura.",
 )
 async def imc(interaction:discord.Interaction, peso:float, altura:float):
     await fn_imc(interaction, peso, altura)
+
+
+@tree.command(name='ship', description='Qual será as chances de termos um casalzão 20 por aqui?!')
+@app_commands.describe(
+    primeira="Marque a primeira pessoa...",
+    segunda="Marque a segunda pessoa...",
+)
+async def ship(interaction:discord.Interaction, primeira:discord.User, segunda:discord.User):
+    await fn_ship(interaction, primeira, segunda)
 
 
 client.run(BOT["TOKEN"])
