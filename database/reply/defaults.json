@@ -1,9 +1,87 @@
 {
-    "ola": "oi!",
-    "oi": "olá!",
-    "ih": "meteste?",
-    "gui": "rockt league, bom demais",
-    "rah": "Sou 🌸",
-    "nao": "sim",
-    "kk": "ksksks"
+    "risadas": {
+        "var": [
+            "kk",
+            "rsr",
+            "hah",
+            "ksk",
+            "corno",
+            "pequepe",
+            "pqp",
+            "ajs",
+            "akj",
+            "kjj",
+            "kqi",
+            "jwj",
+            "hoh",
+            "hih",
+            "huh",
+            "heh",
+            "lol",
+            "ww",
+            "😂"
+        ],
+        "reply": [
+            "KKKKKKKKKKKKKK",
+            "kkkkkkkkk",
+            "ksksksks",
+            "ksjdkjjask",
+            "hahahaha",
+            "hdsjhajsd",
+            "hihihi",
+            "😂😂😂😂"
+        ]
+    },
+
+
+    "comprimetos": {
+        "var": [
+            "oi",
+            "ola",
+            "opa",
+            "iai",
+            "aopa",
+            "eae",
+            "hi",
+            "hello"
+        ],
+        "reply": [
+            "Opa meu lindo!",
+            "Iai meu chapa!!!",
+            "Oieeee!!!",
+            "Alouuu!!!",
+            "Quem fala?! hihi",
+            "Dia ta bunitu ne?!"
+        ]
+    },
+
+
+    "bom_dia": {
+        "var": [
+            "bom dia"
+        ],
+        "reply": [
+            "Bom Dia!!!",
+            "Olaa! como cê ta?!",
+            "Boa Noite haha, to brincando. hihi",
+            "Dia ta lindiu né?!"
+        ]
+    },
+
+    
+    "boa_noite": {
+        "var": [
+            "boa noite",
+            "boa noitche",
+            "boa night"
+        ],
+        "reply": [
+            "Boa Noite!",
+            "Para você também!",
+            "Valeu!",
+            "Thanks!",
+            "Boaaa!!!",
+            "Boa Madruga!!!! hihi"
+        ]
+    }
 }
