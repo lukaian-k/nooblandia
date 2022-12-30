@@ -3,29 +3,28 @@ from discord import app_commands
 
 
 async def fn_imc(interaction:discord.Interaction, peso:float, altura:float):
-    result = peso/(altura*altura)
-    message = f"\n\nEsse foi o resultado do seu IMC: {result}\nSe você estiver abaixo ou acima do peso normal, procure um médico!"
+    result = round(
+        peso/(altura*altura), 2
+    )
+    message = f"\n\n**Esse foi o resultado do seu IMC: {result}**\nSe você estiver abaixo ou acima do peso normal, procure um médico!"
     
+    conditions = {
+        "Peso Normal": 18.5 <= result <= 24.9,
+        "Sobrepeso": 25 <= result <= 29.9,
+        "Obesidade I": 30 <= result <= 34.9,
+        "Obesidade II": 35 <= result <= 39.9,
+        "Obesidade III": 40 <= result <= 49.9,
+        "Obesidade IV": result >= 50,
+        "Abaixo do peso": result < 18.5,
+    }
+
+    keys = conditions.keys()
+
     reply = interaction.response
     
-    if (result >= 18.5 and result <= 24.9): await reply.send_message(
-        f"Seu estado atual é: Peso Normal {message}"
-    )
-    elif (result >= 25 and result <= 29.9): await reply.send_message(
-        f"Seu estado atual é: Sobrepeso {message}"
-    )
-    elif (result >= 30 and result <= 34.9): await reply.send_message(
-        f"Seu estado atual é: Obesidade I {message}"
-    )
-    elif (result >= 35 and result <= 39.9): await reply.send_message(
-        f"Seu estado atual é: Obesidade II {message}"
-    )
-    elif (result >= 40 and result <= 49.9): await reply.send_message(
-        f"Seu estado atual é: Obesidade III {message}"
-    )
-    elif (result >= 50): await reply.send_message(
-        f"Seu estado atual é: Obesidade IV {message}"
-    )
-    elif (result < 18.5): await reply.send_message(
-        f"Seu estado atual é: Abaixo do peso {message}"
-    )
+    for i in keys:
+        if (conditions[i] == True):
+            await reply.send_message(
+                f"Seu estado atual é: **{i}** {message}"
+            )
+            break
