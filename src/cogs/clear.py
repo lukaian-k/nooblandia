@@ -7,13 +7,11 @@ class Clear(commands.Cog):
         self.bot = bot
 
     @commands.command(
-        ame='clear',
+        name='clear',
         help='Limpa até 100 mensagens do Chat.',
         aliases=["apaga","apagar","c"],
     )
     async def clear(self, ctx, amount=99):
-        bot = self.bot
-
         if ctx.author.guild_permissions.administrator:
             message = f'Mensagens apagadas com sucesso!\n\n**Total de mensagens apagadas: {amount}**'
             await ctx.channel.purge(limit=amount+1)

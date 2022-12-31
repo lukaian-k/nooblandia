@@ -4,7 +4,6 @@ from discord.ext import commands
 import os
 import asyncio
 
-import random
 from numpy import number
 from googlesearch import search
 
@@ -31,7 +30,7 @@ class Bot(commands.Bot):
         if not self.synced:
             self.synced = True
 
-        print("bot.py: ON\n")
+        print("\nbot.py: ON\n")
 
 bot = Bot(
     BOT["command_prefix"]
@@ -41,7 +40,7 @@ bot = Bot(
 async def load():
     for filename in os.listdir('src/cogs'):
         if filename.endswith('.py'):
-            print(f"")
+            print(f"cog add: {filename[:-3]}")
             await bot.load_extension(f'src.cogs.{filename[:-3]}')
 
 async def main(TOKEN):
@@ -58,18 +57,3 @@ asyncio.run(
 #     await ctx.send(f'Aqui estão alguns dos resultados encontrados para "{" ".join(args)}":')
 #     for i in set(list(search(' '.join(args), num_results=5, lang="br"))):
 #         print(await ctx.send(str(i)))
-
-
-# @bot.command(
-#     name='gerar_senha',
-#     help='Gera senhas aleatorias para você.',
-#     aliases=["gs","senha"],
-# )
-# async def gerar_senha(ctx, tam:int=16):
-#     try:
-#         caracters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()!'
-#         await ctx.author.send(f'Senha gerada: **{"".join(random.sample(caracters, tam))}**')
-#         await ctx.send('Sua senha foi lhe informada no privado!')
-        
-#     except discord.errors.Forbidden:
-#         await ctx.send('Infelizmente não consigo lhe enviar mensagens privadas!')
