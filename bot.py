@@ -20,7 +20,8 @@ class Bot(commands.Bot):
         super().__init__(
             command_prefix=command_prefix,
             case_insensitive=True,
-            intents=intents
+            intents=intents,
+            help_command=None
         )
         self.synced = False
 
