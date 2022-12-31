@@ -9,7 +9,6 @@ from src.reply.defaults import *
 
 from src.tree.imc import *
 from src.tree.ship import *
-from src.tree.send import *
 
 
 BOT = dict(read_json(DIR_SECRET))
@@ -58,15 +57,6 @@ async def imc(interaction:discord.Interaction, peso:float, altura:float):
 )
 async def ship(interaction:discord.Interaction, primeira:discord.User, segunda:discord.User):
     await fn_ship(interaction, primeira, segunda)
-
-
-@tree.command(name='send', description='Envie mensagens com o bot (uso restrito a admins)')
-@app_commands.describe(
-    channel="Canal onde deseja enviar a mensagem.",
-    message="Mensagem que deseja enviar.",
-)
-async def send(interaction:discord.Interaction, channel:str, message:str):
-    await fn_send(interaction, client, channel, message)
 
 
 client.run(BOT["TOKEN"])

@@ -18,13 +18,11 @@ async def fn_imc(interaction:discord.Interaction, peso:float, altura:float):
         "Abaixo do peso": result < 18.5,
     }
 
-    keys = conditions.keys()
-
     reply = interaction.response
     
-    for i in keys:
-        if (conditions[i] == True):
+    for key in conditions:
+        if (conditions[key] == True):
             await reply.send_message(
-                f"Seu estado atual é: **{i}** {message}"
+                f"Seu estado atual é: **{key}** {message}"
             )
             break
