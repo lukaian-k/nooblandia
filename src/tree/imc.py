@@ -23,6 +23,7 @@ async def fn_imc(interaction:discord.Interaction, peso:float, altura:float):
     for key in conditions:
         if (conditions[key] == True):
             await reply.send_message(
-                f"Seu estado atual é: **{key}** {message}"
+                f"Seu estado atual é: **{key}** {message}",
+                ephemeral=True
             )
             break

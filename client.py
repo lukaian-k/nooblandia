@@ -1,8 +1,9 @@
 import discord
 from discord import app_commands
 
+from database.directories import *
+
 from src.system.json import *
-from src.system.directories import *
 from src.system.ready import *
 
 from src.reply.defaults import *

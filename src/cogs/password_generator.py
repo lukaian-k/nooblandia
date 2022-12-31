@@ -9,7 +9,7 @@ class Password_generator(commands.Cog):
         self.bot = bot
 
     @commands.command(
-        name='Gerador de Senhas',
+        name='password_generator',
         help='Gera senhas aleatorias para você.',
         aliases=["password","gs","senha","gerar_senha"],
     )

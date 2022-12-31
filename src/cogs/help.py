@@ -20,14 +20,18 @@ class Help(commands.Cog):
             div += [command.cog_name]
         div = list(set(div))
 
-        tab = '...'
+        tab = '・'
         helptxt = ''
         for name in div:
-            helptxt += f'***{name.upper()}:\n***'
+            helptxt += f'➭ *{name.upper()}*\n'
 
             for command in commands:
                 if name == command.cog_name:
-                    helptxt += f'{tab} | *{command}* |\n{tab} {command.help}\n\n'
+                    _name = f'{tab} **Nome do Comando:** | *{command}* |\n'
+                    _help = f'{tab} **Sobre:** {command.help}\n'
+                    _aliases = f'{tab} **Variações:** {" **-** ".join(command.aliases)}\n\n'
+
+                    helptxt += f'{_name}{_help}{_aliases}'
                     
         embedhelp = discord.Embed(
             colour = 8592838, #purple

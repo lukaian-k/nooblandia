@@ -7,8 +7,9 @@ import asyncio
 from numpy import number
 from googlesearch import search
 
+from database.directories import *
+
 from src.system.json import *
-from src.system.directories import *
 
 
 BOT = dict(read_json(DIR_SECRET))

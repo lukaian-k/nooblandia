@@ -186,7 +186,7 @@ class Music(commands.Cog):
         await ctx.reply(embed = embedvc)
 
     #Commands - Download
-    @commands.command(name = "download", help = "Baixa a música escolhida \n Ex.: _download até que durou", aliases = ['b', 'baixar'])
+    @commands.command(name = "download", help = "Baixa a música escolhida・**Ex.:** _download até que durou", aliases = ['b', 'baixar'])
     async def download(self, ctx, *args):
         query = " ".join(args)
         

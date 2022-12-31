@@ -1,7 +1,7 @@
 from random import choice
 
 from src.system.json import *
-from src.system.directories import *
+from database.directories import *
 
 
 async def defaults(message):
