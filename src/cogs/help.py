@@ -13,11 +13,22 @@ class Help(commands.Cog):
     )
     async def help(self, ctx):
         bot = self.bot
+        commands = bot.commands
 
+        div = []
+        for command in commands:
+            div += [command.cog_name]
+        div = list(set(div))
+
+        tab = '...'
         helptxt = ''
-        for command in bot.commands:
-            helptxt += f'**{command}:**\n{command.help}\n\n'
+        for name in div:
+            helptxt += f'***{name.upper()}:\n***'
 
+            for command in commands:
+                if name == command.cog_name:
+                    helptxt += f'{tab} | *{command}* |\n{tab} {command.help}\n\n'
+                    
         embedhelp = discord.Embed(
             colour = 8592838, #purple
             title = f'{bot.user.name} Esses são meus comandos!',
