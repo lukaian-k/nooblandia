@@ -34,7 +34,7 @@ class Help(commands.Cog):
                     helptxt += f'{_name}{_help}{_aliases}'
                     
         embed = discord.Embed(
-            colour = 8592838, #purple
+            colour = 15277667,
 
             title = f'{bot.user.name} Esses são meus comandos!',
             description = helptxt+'\n*Preparado?*'

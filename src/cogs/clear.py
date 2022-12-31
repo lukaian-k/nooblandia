@@ -13,12 +13,25 @@ class Clear(commands.Cog):
     )
     async def clear(self, ctx, amount=99):
         if ctx.author.guild_permissions.administrator:
-            message = f'Mensagens apagadas com sucesso!\n\n**Total de mensagens apagadas: {amount}**'
+            message = f'Total de mensagens apagadas: **{amount}**'
+
+            embed = discord.Embed(
+                colour = 15844367,
+            
+                title = 'Mensagens apagadas com sucesso!',
+                description = message
+            )
             await ctx.channel.purge(limit=amount+1)
-            await ctx.send(message, delete_after=20)
+            await ctx.send(
+                embed=embed,
+                delete_after=20
+            )
         else:
             no_permission = 'Você não tem permissão para usar esse comando!'
-            embed = discord.Embed(title=f'{no_permission}')
+            embed = discord.Embed(
+                colour = 10038562,
+                title=f'{no_permission}'
+            )
             await ctx.send(embed=embed)
 
 

@@ -17,13 +17,26 @@ class Password_generator(commands.Cog):
         try:
             caracters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()!"
 
-            await ctx.author.send(
-                f'Senha gerada: **{"".join(sample(caracters, size))}**'
+            embed = discord.Embed(
+                colour = 3447003,
+
+                title = 'Aqui está a sua senha!',
+                description = f'➭ Senha gerada: **{"".join(sample(caracters, size))}**'
             )
-            await ctx.send('**Sua senha foi lhe informada no privado!**')
+            await ctx.author.send(embed=embed)
+            
+            embed = discord.Embed(
+                colour = 15418782,
+                title = 'Sua senha foi lhe informada no privado!',
+            )
+            await ctx.send(embed=embed)
             
         except discord.errors.Forbidden:
-            await ctx.send('**Infelizmente não consigo lhe enviar mensagens privadas!**')
+            embed = discord.Embed(
+                colour = 10038562,
+                title = 'Infelizmente não consigo lhe enviar mensagens privadas!',
+            )
+            await ctx.send(embed=embed)
 
 
 async def setup(bot):
