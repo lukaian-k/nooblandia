@@ -33,14 +33,15 @@ class Help(commands.Cog):
 
                     helptxt += f'{_name}{_help}{_aliases}'
                     
-        embedhelp = discord.Embed(
+        embed = discord.Embed(
             colour = 8592838, #purple
+
             title = f'{bot.user.name} Esses são meus comandos!',
             description = helptxt+'\n*Preparado?*'
         )
-        embedhelp.set_thumbnail(url=bot.user.avatar.url)
+        embed.set_thumbnail(url=bot.user.avatar.url)
         
-        await ctx.send(embed=embedhelp)
+        await ctx.send(embed=embed)
 
 
 async def setup(bot):
