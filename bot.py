@@ -5,7 +5,6 @@ import os
 import asyncio
 
 from numpy import number
-from googlesearch import search
 
 from database.directories import *
 
@@ -52,10 +51,3 @@ async def main(TOKEN):
 asyncio.run(
     main(BOT["TOKEN"])
 )
-
-
-# @bot.command(name='google', help='Pesquise rápido no google pelo discord!', aliases=['g','pesquise'])
-# async def google(ctx, *args):
-#     await ctx.send(f'Aqui estão alguns dos resultados encontrados para "{" ".join(args)}":')
-#     for i in set(list(search(' '.join(args), num_results=5, lang="br"))):
-#         print(await ctx.send(str(i)))

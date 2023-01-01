@@ -10,6 +10,7 @@ from src.reply.defaults import *
 
 from src.tree.imc import *
 from src.tree.ship import *
+from src.tree.google import *
 
 
 BOT = dict(read_json(DIR_SECRET))
@@ -58,6 +59,14 @@ async def imc(interaction:discord.Interaction, peso:float, altura:float):
 )
 async def ship(interaction:discord.Interaction, primeira:discord.User, segunda:discord.User):
     await fn_ship(interaction, primeira, segunda)
+
+
+@tree.command(name='google', description='Pesquise rápido no google pelo discord!')
+@app_commands.describe(
+    buscar="O que deseja buscar?",
+)
+async def google(interaction:discord.Interaction, buscar:str):
+    await fn_google(interaction, buscar)
 
 
 client.run(BOT["TOKEN"])
