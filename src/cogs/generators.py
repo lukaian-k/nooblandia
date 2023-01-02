@@ -26,11 +26,10 @@ class Generators(commands.Cog):
             )
             await ctx.author.send(embed=embed)
             
-            embed = discord.Embed(
-                colour = 15418782,
-                title = 'Sua senha foi lhe informada no privado!',
-            )
-            await ctx.send(embed=embed)
+            embed.colour = 15418782
+            embed.title = 'Sua senha foi lhe informada no privado!'
+            embed.description = None
+            await ctx.reply(embed=embed)
             
         except discord.errors.Forbidden:
             embed = discord.Embed(
@@ -54,7 +53,7 @@ class Generators(commands.Cog):
             title = 'Link Encurtado!',
             description = f'➭ **{short}**'
         )
-        await ctx.send(embed=embed)
+        await ctx.reply(embed=embed)
 
 
 async def setup(bot):
