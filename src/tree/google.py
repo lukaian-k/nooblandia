@@ -26,7 +26,7 @@ async def fn_google(interaction:discord.Interaction, search_for:str):
         colour = 1146986,
     
         title = f'Aqui estão alguns dos resultados encontrados para ({search_for}):',
-        description = found
+        description = f'**{found}**'
     )
 
     reply = interaction.response

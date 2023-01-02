@@ -2,9 +2,10 @@ import discord
 from discord.ext import commands
 
 from random import sample
+import pyshorteners
 
 
-class Password_generator(commands.Cog):
+class Generators(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -39,5 +40,22 @@ class Password_generator(commands.Cog):
             await ctx.send(embed=embed)
 
 
+    @commands.command(
+        name='shortlink',
+        help='Encurta links para você!',
+        aliases=["short","sl","encurtar"],
+    )
+    async def shortlink(self, ctx, link:str):
+        short = pyshorteners.Shortener().tinyurl.short(link)
+        
+        embed = discord.Embed(
+            colour = 3447003,
+
+            title = 'Link Encurtado!',
+            description = f'➭ **{short}**'
+        )
+        await ctx.send(embed=embed)
+
+
 async def setup(bot):
-    await bot.add_cog(Password_generator(bot))
+    await bot.add_cog(Generators(bot))

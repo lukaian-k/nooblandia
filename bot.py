@@ -4,8 +4,6 @@ from discord.ext import commands
 import os
 import asyncio
 
-from numpy import number
-
 from database.directories import *
 
 from src.system.json import *
