@@ -33,7 +33,7 @@ async def fn_imc(interaction:discord.Interaction, peso:float, altura:float):
     reply = interaction.response
     
     for key in conditions:
-        if (conditions[key] == True):
+        if conditions[key]:
             embed = discord.Embed(
                 colour = colors[key],
             

@@ -30,7 +30,7 @@ class Features(commands.Cog):
                     colour = 5793266,
 
                     title = '➭ Tudo Certo!',
-                    description = '*Apenas aguarde o download ser concluido...*'
+                    description = 'Apenas aguarde o download ser concluido...'
                 )
                 await ctx.reply(embed=embed)
 
@@ -39,7 +39,7 @@ class Features(commands.Cog):
 
                 embed.colour = 5763719
                 embed.title = 'Download Concluido!'
-                embed.description = '➭ *Aqui está o **seu pedido**!*'
+                embed.description = '➭ Aqui está o **seu pedido**!'
 
                 with open(ydl_opts["outtmpl"], 'rb') as file:
                     await ctx.reply(

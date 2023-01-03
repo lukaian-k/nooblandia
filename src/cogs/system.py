@@ -85,6 +85,41 @@ class System(commands.Cog):
 
 
     @commands.command(
+        name='create_channel',
+        help='Cria um novo canal no servidor (uso restrito a admins).',
+        aliases=["cc","channel"],
+    )
+    @commands.has_permissions(
+        administrator=True,
+    )
+    async def create_channel(self, ctx, *channel_name):
+        channel_name = "-".join(channel_name)
+        guild = ctx.guild
+
+        existing_channel = discord.utils.get(
+            guild.channels,
+            name=channel_name
+        )
+
+        embed = discord.Embed()
+
+        if not existing_channel:
+            print(f'Creating a new channel: {channel_name}')
+
+            embed.colour = 5763719
+            embed.title = 'Novo canal criado!'
+            embed.description = f'➭ Nome: **{channel_name}**'
+
+            await guild.create_text_channel(channel_name)
+        else:
+            embed.colour = 15548997
+            embed.title = 'Algo deu errado!'
+            embed.description = f'➭ O Canal **{channel_name}** já existe.'
+        
+        await ctx.reply(embed=embed)
+
+
+    @commands.command(
         name='clear',
         help='Limpa até 100 mensagens do Chat.',
         aliases=["apaga","apagar","c"],

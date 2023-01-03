@@ -14,7 +14,7 @@ async def ready(client):
         ),
 
         "streaming": discord.Streaming(
-            name='Minecraft com Mod!',
+            name='Minecraft',
             game='Minecraft',
 
             platform='Twitch',
