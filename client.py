@@ -11,6 +11,7 @@ from src.reply.defaults import *
 from src.tree.imc import *
 from src.tree.ship import *
 from src.tree.google import *
+from src.tree.dice import *
 
 
 BOT = dict(read_json(DIR_SECRET))
@@ -67,6 +68,15 @@ async def ship(interaction:discord.Interaction, primeira:discord.User, segunda:d
 )
 async def google(interaction:discord.Interaction, buscar:str):
     await fn_google(interaction, buscar)
+
+    
+@tree.command(name='rolar_dados', description='Simula uma jogada de dado.')
+@app_commands.describe(
+    quantos_dados="Quantidade de dados a serem rolados.",
+    lados="Quantos lados o dado terá.",
+)
+async def rolar_dados(interaction:discord.Interaction, quantos_dados:int, lados:int):
+    await fn_dice(interaction, quantos_dados, lados)
 
 
 client.run(BOT["TOKEN"])
