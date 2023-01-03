@@ -2,7 +2,7 @@ import discord
 from discord import app_commands
 
 
-async def fn_imc(interaction:discord.Interaction, peso:float, altura:float):
+async def imc(interaction:discord.Interaction, peso:float, altura:float):
     result = round(
         peso/(altura*altura), 2
     )

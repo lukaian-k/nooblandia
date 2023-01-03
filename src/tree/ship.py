@@ -6,7 +6,7 @@ import io
 from PIL import Image, ImageFont, ImageDraw, ImageOps
 
 
-async def fn_ship(interaction:discord.Interaction, user1:discord.User, user2:discord.User):
+async def ship(interaction:discord.Interaction, user1:discord.User, user2:discord.User):
     message = "🏹 **Vamos ver se teremos um casalzão 20 por aqui!** 💕"
 
     if user1.name == user2.name:

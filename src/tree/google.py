@@ -4,7 +4,7 @@ from discord import app_commands
 from googlesearch import search
 
 
-async def fn_google(interaction:discord.Interaction, search_for:str):
+async def google(interaction:discord.Interaction, search_for:str):
     print(f'\nBusca Por: {search_for}\n')
 
     found = list(

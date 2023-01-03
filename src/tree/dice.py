@@ -4,7 +4,7 @@ from discord import app_commands
 from random import choice
 
 
-async def fn_dice(interaction:discord.Interaction, num_dice:int, sides:int):
+async def dice(interaction:discord.Interaction, num_dice:int, sides:int):
     dice = [
         str(
             choice(

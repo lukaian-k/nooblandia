@@ -1,6 +1,8 @@
 import discord
 from discord import app_commands
 
+from importlib import import_module
+
 from database.directories import *
 
 from src.system.json import *
@@ -8,10 +10,9 @@ from src.system.ready import *
 
 from src.reply.defaults import *
 
-from src.tree.imc import *
-from src.tree.ship import *
-from src.tree.google import *
-from src.tree.dice import *
+def module(name):
+    DIR_MODULE = 'src.tree.' + name
+    return import_module(DIR_MODULE)
 
 
 BOT = dict(read_json(DIR_SECRET))
@@ -50,7 +51,7 @@ async def on_message(message):
     altura="Insira a sua Altura.",
 )
 async def imc(interaction:discord.Interaction, peso:float, altura:float):
-    await fn_imc(interaction, peso, altura)
+    await module('imc').imc(interaction, peso, altura)
 
 
 @tree.command(name='ship', description='Qual será as chances de termos um casalzão 20 por aqui?!')
@@ -59,7 +60,7 @@ async def imc(interaction:discord.Interaction, peso:float, altura:float):
     segunda="Marque a segunda pessoa...",
 )
 async def ship(interaction:discord.Interaction, primeira:discord.User, segunda:discord.User):
-    await fn_ship(interaction, primeira, segunda)
+    await module('ship').ship(interaction, primeira, segunda)
 
 
 @tree.command(name='google', description='Pesquise rápido no google pelo discord!')
@@ -67,7 +68,7 @@ async def ship(interaction:discord.Interaction, primeira:discord.User, segunda:d
     buscar="O que deseja buscar?",
 )
 async def google(interaction:discord.Interaction, buscar:str):
-    await fn_google(interaction, buscar)
+    await module('google').google(interaction, buscar)
 
     
 @tree.command(name='rolar_dados', description='Simula uma jogada de dado.')
@@ -76,7 +77,7 @@ async def google(interaction:discord.Interaction, buscar:str):
     lados="Quantos lados o dado terá.",
 )
 async def rolar_dados(interaction:discord.Interaction, quantos_dados:int, lados:int):
-    await fn_dice(interaction, quantos_dados, lados)
+    await module('dice').dice(interaction, quantos_dados, lados)
 
 
 client.run(BOT["TOKEN"])
