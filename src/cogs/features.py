@@ -3,6 +3,8 @@ from discord.ext import commands
 
 from youtube_dl import YoutubeDL
 
+from src.system.system import clear_dir
+
 
 class Features(commands.Cog):
     def __init__(self, bot):
@@ -10,14 +12,19 @@ class Features(commands.Cog):
 
     @commands.command(
         name='download',
-        help='Faz download de videos do youtube apartir de links.',
+        help='Faz download de videos do YouTube apartir de links.',
         aliases=["d","baixar"],
     )
     @commands.has_permissions(
         administrator=True,
     )
-    async def download(self, ctx, link:str):
-        with YoutubeDL() as ydl:
+    async def download(self, ctx, link:str, ext:str):
+        ydl_opts = {
+            "format": f'bestvideo[ext={ext}]+bestaudio[ext=m4a]/best[ext={ext}]/best',
+            "outtmpl": f'assets/downloads/temp.{ext}',
+        }
+
+        with YoutubeDL(ydl_opts) as ydl:
             try:
                 embed = discord.Embed(
                     colour = 5793266,
@@ -30,16 +37,24 @@ class Features(commands.Cog):
                 link = [link.strip()]
                 ydl.download(link)
 
-                embed.colour = 10070709
+                embed.colour = 5763719
                 embed.title = 'Download Concluido!'
-                embed.description = None
-                await ctx.reply(embed=embed)
+                embed.description = '➭ *Aqui está o **seu pedido**!*'
+
+                with open(ydl_opts["outtmpl"], 'rb') as file:
+                    await ctx.reply(
+                        file=discord.File(file),
+                        embed=embed
+                    )
             except:
                 embed = discord.Embed(
                     colour = 15548997,
-                    title = 'Não foi possível fazer o download do vídeo',
+                    title = 'Algo deu errado!',
+                    description = 'Não foi possível **baixar ou enviar** o vídeo'
                 )
                 await ctx.reply(embed=embed)
+
+        clear_dir('assets/downloads')
 
 
 async def setup(bot):
