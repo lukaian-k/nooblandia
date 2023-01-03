@@ -38,4 +38,4 @@ async def ready(client):
 
     print(f'Init: {client.user.name}')
     print(f'Bot ID: {client.user.id}')
-    print(f'Ping: {round (client.latency*1000)}')
+    print(f'Ping: {round(client.latency*1000)}')
