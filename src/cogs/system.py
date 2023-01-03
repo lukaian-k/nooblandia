@@ -39,10 +39,13 @@ class System(commands.Cog):
         helptxt = ''
         for name in div:
             helptxt += f'➭ *{name.upper()}*\n'
+            num = 0
 
             for command in commands:
                 if name == command.cog_name:
-                    _name = f'{tab} **Nome do Comando:** | *{command}* |\n'
+                    num += 1
+
+                    _name = f'{tab} (**{num}**) **Nome do Comando:** | *{command}* |\n'
                     _help = f'{tab} **Sobre:** {command.help}\n'
                     _aliases = f'{tab} **Variações:** {" **-** ".join(command.aliases)}\n\n'
 
