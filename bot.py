@@ -9,7 +9,9 @@ from database.directories import *
 from src.system.json import *
 
 
-BOT = dict(read_json(DIR_SECRET))
+BOT = dict(
+    read_json(DIR_SECRET["BOT"])
+)
 
 class Bot(commands.Bot):
     def __init__(self, command_prefix):

@@ -15,7 +15,9 @@ def module(name):
     return import_module(DIR_MODULE)
 
 
-BOT = dict(read_json(DIR_SECRET))
+BOT = dict(
+    read_json(DIR_SECRET["BOT"])
+)
 
 class Client(discord.Client):
     def __init__(self):
@@ -78,6 +80,14 @@ async def google(interaction:discord.Interaction, buscar:str):
 )
 async def rolar_dados(interaction:discord.Interaction, quantos_dados:int, lados:int):
     await module('dice').dice(interaction, quantos_dados, lados)
+
+
+@tree.command(name='chat_gpt', description='Use o poder da AI do OpenAI aqui pelo discord!')
+@app_commands.describe(
+    prompt="Escreva QUASE tudo quiser, e a Inteligencia Artificial irá te responder!",
+)
+async def chatGPT(interaction:discord.Interaction, prompt:str):
+    await module('chat_gpt').chatGPT(interaction, prompt)
 
 
 client.run(BOT["TOKEN"])
