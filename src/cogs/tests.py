@@ -20,7 +20,7 @@ class Tests(commands.Cog):
     async def record(self, ctx, duration:int=10):
         embed = discord.Embed()
 
-        if not ctx.author.voice or ctx.author.voice.channel != ctx.me.voice.channel:
+        if not ctx.author.voice:
             embed.colour = 15548997
             embed.title = "Você precisa estar em um canal de voz para usar esse comando."
             await ctx.reply(
