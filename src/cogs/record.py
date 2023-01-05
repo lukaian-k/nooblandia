@@ -126,6 +126,7 @@ class Record(commands.Cog):
         for i in range(0, int(RATE/CHUNK*SECONDS)):
             data = stream.read(CHUNK)
             audio_data.append(data)
+        audio_data = b''.join(audio_data)
 
         embed.colour = 5763719
         embed.title = 'Gravação concluida!'
@@ -145,7 +146,7 @@ class Record(commands.Cog):
         file.setnchannels(CHANNELS)
         file.setsampwidth(audio.get_sample_size(FORMAT))
         file.setframerate(RATE)
-        file.writeframes(b''.join(audio_data))
+        file.writeframes(audio_data)
         file.close()
 
 
