@@ -9,17 +9,22 @@ class Record(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+        self.what_is = None
         self.ctx = None
         self.duration = None
 
     @commands.Cog.listener()
     async def on_reaction_add(self, reaction, user):
+        if self.what_is != 'record':
+            return
         bot = self.bot
         
         message = reaction.message
         emoji = str(reaction.emoji)
 
-        if user != bot.user and emoji == '▶':
+        is_user = user != bot.user
+
+        if is_user and emoji == '▶':
             await message.remove_reaction('▶', user)
             
             await message.remove_reaction('▶', bot.user)
@@ -27,7 +32,7 @@ class Record(commands.Cog):
             
             await self.recording(message)
 
-        if user != bot.user and emoji == '❌':
+        elif is_user and emoji == '❌':
             embed = discord.Embed(
                 colour=15548997,
                 title='Cancelado!'
@@ -69,6 +74,7 @@ class Record(commands.Cog):
             )
             return
 
+        self.what_is = 'record'
         self.ctx = ctx
         self.duration = duration
 
