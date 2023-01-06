@@ -157,7 +157,7 @@ class Record(commands.Cog):
 
 
         embed.colour = 5763719
-        embed.title = 'Mensagem de Voz:!'
+        embed.title = 'Mensagem de Voz'
         embed.description = f'➭ Send by: **{author.name}**・Duração: **{duration}s**'
 
         with open(DIRECTORY, 'rb') as file:

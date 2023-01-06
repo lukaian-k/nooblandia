@@ -35,30 +35,31 @@ class System(commands.Cog):
             div += [command.cog_name]
         div = list(set(div))
 
-        tab = '・'
-        helptxt = ''
-        for name in div:
-            helptxt += f'➭ *{name.upper()}*\n'
-            num = 0
-
-            for command in commands:
-                if name == command.cog_name:
-                    num += 1
-
-                    _name = f'{tab} (**{num}**) **Nome do Comando:** | *{command}* |\n'
-                    _help = f'{tab} **Sobre:** {command.help}\n'
-                    _aliases = f'{tab} **Variações:** {" **-** ".join(command.aliases)}\n\n'
-
-                    helptxt += f'{_name}{_help}{_aliases}'
-                    
         embed = discord.Embed(
             colour = 15277667,
 
-            title = f'{bot.user.name} Esses são meus comandos!',
-            description = helptxt+'\n*Preparado?*'
+            title = f'Oi eu sou a **{bot.user.name}!**',
+            description = '➥ Esses são meus **comandos:**'
         )
         embed.set_thumbnail(url=bot.user.avatar.url)
-        
+
+        tab = '・'
+        for name in div:
+
+            for command in commands:
+
+                if name == command.cog_name:
+
+                    _name = f'*{name.upper()}*{tab}Nome do Comando: (*{command}*)'
+                    _help = f'{tab} **Sobre:** {command.help}\n'
+                    _aliases = f'{tab} **Variações:** {" **-** ".join(command.aliases)}'
+
+                    embed.add_field(
+                        name=f'➭ {_name}',
+                        value=f'{_help}{_aliases}',
+                        inline=False
+                    )
+                    
         await ctx.send(embed=embed)
     
 
