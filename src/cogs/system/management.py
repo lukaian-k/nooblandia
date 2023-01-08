@@ -2,12 +2,12 @@ import discord
 from discord.ext import commands
 
 
-class System(commands.Cog):
-    def __init__(self, bot):
+class Management(commands.Cog):
+    def __init__(self, bot) -> None:
         self.bot = bot
 
     @commands.Cog.listener()
-    async def on_command_error(self, ctx, error):
+    async def on_command_error(self, ctx, error) -> None:
         if isinstance(error, commands.errors.CheckFailure):
             no_permission = 'Você não tem permissão para usar esse comando!'
 
@@ -26,7 +26,7 @@ class System(commands.Cog):
         help='Comando de ajuda',
         aliases=['h', 'ajuda'],
     )
-    async def help(self, ctx):
+    async def help(self, ctx) -> None:
         bot = self.bot
         commands = bot.commands
 
@@ -71,7 +71,7 @@ class System(commands.Cog):
     @commands.has_permissions(
         administrator=True,
     )
-    async def send(self, ctx, channel:str, *message):
+    async def send(self, ctx, channel:str, *message) -> None:
         bot = self.bot
         message = " ".join(message)
 
@@ -96,7 +96,7 @@ class System(commands.Cog):
     @commands.has_permissions(
         administrator=True,
     )
-    async def create_channel(self, ctx, *channel_name):
+    async def create_channel(self, ctx, *channel_name) -> None:
         channel_name = "-".join(channel_name)
         guild = ctx.guild
 
@@ -131,7 +131,7 @@ class System(commands.Cog):
     @commands.has_permissions(
         administrator=True,
     )
-    async def clear(self, ctx, amount=99):
+    async def clear(self, ctx, amount=99) -> None:
         message = f'Total de mensagens apagadas: **{amount}**'
 
         embed = discord.Embed(
@@ -147,5 +147,7 @@ class System(commands.Cog):
         )
 
 
-async def setup(bot):
-    await bot.add_cog(System(bot))
+async def setup(bot) -> None:
+    await bot.add_cog(
+        Management(bot)
+    )

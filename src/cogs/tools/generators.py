@@ -6,7 +6,7 @@ import pyshorteners
 
 
 class Generators(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot) -> None:
         self.bot = bot
 
     @commands.command(
@@ -14,7 +14,7 @@ class Generators(commands.Cog):
         help='Gera senhas aleatorias para você.',
         aliases=["password","gs","senha","gerar_senha"],
     )
-    async def password_generator(self, ctx, size:int=16):
+    async def password_generator(self, ctx, size:int=16) -> None:
         try:
             caracters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()!"
 
@@ -44,7 +44,7 @@ class Generators(commands.Cog):
         help='Encurta links para você!',
         aliases=["short","sl","encurtar"],
     )
-    async def shortlink(self, ctx, link:str):
+    async def shortlink(self, ctx, link:str) -> None:
         short = pyshorteners.Shortener().tinyurl.short(link)
         
         embed = discord.Embed(
@@ -56,5 +56,7 @@ class Generators(commands.Cog):
         await ctx.reply(embed=embed)
 
 
-async def setup(bot):
-    await bot.add_cog(Generators(bot))
+async def setup(bot) -> None:
+    await bot.add_cog(
+        Generators(bot)
+    )

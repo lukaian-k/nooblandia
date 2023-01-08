@@ -29,10 +29,18 @@ class Bot(commands.Bot):
     async def setup_hook(self):
         self.session = aiohttp.ClientSession()
 
-        for filename in os.listdir('src/cogs'):
-            if filename.endswith('.py'):
-                print(f"cog add: {filename[:-3]}")
-                await bot.load_extension(f'src.cogs.{filename[:-3]}')
+        DIR_COG = 'src/cogs'
+        
+        for directory in os.listdir(DIR_COG):
+            if directory == '__pycache__':
+                continue
+
+            print(f'\nDirectory: {directory}')
+            
+            for filename in os.listdir(f'{DIR_COG}/{directory}'):
+                if filename.endswith('.py'):
+                    await self.load_extension(f'src.cogs.{directory}.{filename[:-3]}')
+                    print(f'└── Cog added: {filename[:-3]}')
 
         await bot.tree.sync()
 

@@ -7,16 +7,16 @@ project/
 └── src/
     ├── cogs/
     │   ├── interactions/
-	│	│	├── entertainments.py	➭	(game, dice, ship)
+	│	│	├── entertainments.py	➭	(game=/, dice=/, ship=/)
 	│	│	└── music.py			➭	(play, queue, skip, stop)
     │   ├── tools/
-	│	│	├── searches.py			➭	(google, chat_gpt)
-	│	│	├── features.py			➭	(record, download)
-	│	│	└── generators.py		➭	(password_generator, shortlink)
+	│	│	├── searches.py			➭	(google=/, chat_gpt=/)
+	│	│	├── features.py			➭	(record=/, download=/)
+	│	│	└── generators.py		➭	(password_generator=/, shortlink=/)
 	│	├── system/
-	│	│	└── management.py		➭	(on_command_error, help, clear, send, create_channel)
+	│	│	└── management.py		➭	(on_command_error, help=/, clear=&, send=&, create_channel=&)
 	│	└── math
-	│		└── health.py			➭	(imc)
+	│		└── health.py			➭	(imc=/)
 	├── reply
 	│	└── defaults.py
     └── system/
