@@ -18,15 +18,33 @@ class Features(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(
+    @app_commands.command(
         name='download',
-        help='Faz download de videos do YouTube apartir de links.',
-        aliases=["d","baixar"],
+        description='Faz download de videos do YouTube apartir de links.'
     )
-    @commands.has_permissions(
-        administrator=True,
+    @app_commands.describe(
+        link="Link do vídeo do YouTube que deseja baixar!",
+        ext="Formato do Arquivo.",
     )
-    async def download(self, ctx, link:str, ext:str) -> None:
+    @app_commands.choices(
+        ext = [
+            Choice(
+                name='mp4',
+                value='mp4'
+            ),
+            Choice(
+                name='mp3',
+                value='mp3'
+            ),
+            Choice(
+                name='wav',
+                value='wav'
+            )
+        ]
+    )
+    async def download(self, interaction:discord.Interaction, link:str, ext:str) -> None:
+        await interaction.response.defer()
+
         ydl_opts = {
             "format": f'bestvideo[ext={ext}]+bestaudio[ext=m4a]/best[ext={ext}]/best',
             "outtmpl": f'assets/downloads/temp.{ext}',
@@ -34,33 +52,32 @@ class Features(commands.Cog):
 
         with YoutubeDL(ydl_opts) as ydl:
             try:
-                embed = discord.Embed(
-                    colour = 5793266,
-
-                    title = '➭ Tudo Certo!',
-                    description = 'Apenas aguarde o download ser concluido...'
-                )
-                await ctx.reply(embed=embed)
-
                 link = [link.strip()]
                 ydl.download(link)
 
-                embed.colour = 5763719
-                embed.title = 'Download Concluido!'
-                embed.description = '➭ Aqui está o **seu pedido**!'
+                embed = discord.Embed(
+                    colour = 5763719,
+                    title = 'Download Concluido!',
+                    description = '➭ Aqui está o **seu pedido**!'
+                )
 
                 with open(ydl_opts["outtmpl"], 'rb') as file:
-                    await ctx.reply(
-                        file=discord.File(file),
+                    file = discord.File(file, filename=f'seu_pedido.{ext}')
+
+                    await interaction.edit_original_response(
+                        attachments=[file],
                         embed=embed
                     )
-            except:
+                    
+            except Exception as error:
+                print(error)
+                
                 embed = discord.Embed(
                     colour = 15548997,
                     title = 'Algo deu errado!',
                     description = 'Não foi possível **baixar ou enviar** o vídeo'
                 )
-                await ctx.reply(embed=embed)
+                await interaction.edit_original_response(embed=embed)
 
         clear_dir('assets/downloads')
 
@@ -72,18 +89,6 @@ class Features(commands.Cog):
     @app_commands.describe(
         prompt="Escreva QUASE tudo quiser, e a Inteligencia Artificial irá te responder!",
     )
-    # @app_commands.choices(
-    #     prompt = [
-    #         Choice(
-    #             name='Qual a maior ilha do mundo?',
-    #             value='Qual a maior ilha do mundo?'
-    #         ),
-    #         Choice(
-    #             name='Fibonacci in Rust',
-    #             value='Fibonacci in Rust'
-    #         )
-    #     ]
-    # )
     async def chatGPT(self, interaction:discord.Interaction, prompt:str) -> None:
         try:
             await interaction.response.defer()
