@@ -29,16 +29,28 @@ class Features(commands.Cog):
     @app_commands.choices(
         ext = [
             Choice(
-                name='mp4',
+                name='Vídeo ➭ mp4',
                 value='mp4'
             ),
             Choice(
-                name='mp3',
+                name='Vídeo ➭ mov',
+                value='mov'
+            ),
+            Choice(
+                name='Vídeo ➭ mkv',
+                value='mkv'
+            ),
+            Choice(
+                name='Áudio ➭ mp3',
                 value='mp3'
             ),
             Choice(
-                name='wav',
+                name='Áudio ➭ wav',
                 value='wav'
+            ),
+            Choice(
+                name='Áudio ➭ ogg',
+                value='ogg'
             )
         ]
     )
@@ -62,7 +74,8 @@ class Features(commands.Cog):
                 )
 
                 with open(ydl_opts["outtmpl"], 'rb') as file:
-                    file = discord.File(file, filename=f'seu_pedido.{ext}')
+                    user = interaction.user
+                    file = discord.File(file, filename=f'pedido_de_{user}.{ext}')
 
                     await interaction.edit_original_response(
                         attachments=[file],
