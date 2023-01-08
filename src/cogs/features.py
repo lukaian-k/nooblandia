@@ -1,5 +1,7 @@
 import discord
 from discord.ext import commands
+from discord import app_commands
+from discord.app_commands import Choice
 
 from youtube_dl import YoutubeDL
 
@@ -63,50 +65,70 @@ class Features(commands.Cog):
         clear_dir('assets/downloads')
 
 
-    @commands.command(
+    @app_commands.command(
         name='chat_gpt',
-        help='Use o poder da AI do OpenAI aqui pelo discord!',
-        aliases=["chat","gpt","cg"],
+        description='Use o poder da AI do OpenAI aqui pelo discord!'
     )
-    async def chatGPT(self, ctx, *prompt) -> None:
-        prompt = " ".join(prompt)
-        
-        MODEL = 'text-davinci-003'
-        TEMPERATURE = 0.6
-        MAX_TOKENS = 150
-        
-        BOT = dict(
-            read_json(DIR_SECRET["SYSTEM"])
-        )
-        openai.api_key = BOT["OPENAI_API_KEY"]
+    @app_commands.describe(
+        prompt="Escreva QUASE tudo quiser, e a Inteligencia Artificial irá te responder!",
+    )
+    # @app_commands.choices(
+    #     prompt = [
+    #         Choice(
+    #             name='Qual a maior ilha do mundo?',
+    #             value='Qual a maior ilha do mundo?'
+    #         ),
+    #         Choice(
+    #             name='Fibonacci in Rust',
+    #             value='Fibonacci in Rust'
+    #         )
+    #     ]
+    # )
+    async def chatGPT(self, interaction:discord.Interaction, prompt:str) -> None:
+        try:
+            await interaction.response.defer()
 
-        response = openai.Completion.create(
-            model=MODEL,
-            prompt=prompt,
-            temperature=TEMPERATURE,
-            max_tokens=MAX_TOKENS,
+            MODEL = 'text-davinci-003'
+            TEMPERATURE = 0.6
+            MAX_TOKENS = 150
+            
+            BOT = dict(
+                read_json(DIR_SECRET["SYSTEM"])
+            )
+            openai.api_key = BOT["OPENAI_API_KEY"]
 
-            top_p=1,
-            frequency_penalty=1,
-            presence_penalty=1
-        )
+            response = openai.Completion.create(
+                model=MODEL,
+                prompt=prompt,
+                temperature=TEMPERATURE,
+                max_tokens=MAX_TOKENS,
+
+                top_p=1,
+                frequency_penalty=1,
+                presence_penalty=1
+            )
 
 
-        output = response["choices"][0]["text"]; pprint(output)
-        text = "".join(output)
+            output = response["choices"][0]["text"]; pprint(output)
+            text = "".join(output)
 
-        embed = discord.Embed(
-            colour=3426654,
-            title='chatGPT 🤖',
-            description=f'**Pergunta:** {prompt}'
-        )
-        embed.add_field(
-            name='➭ Resposta',
-            value=text,
-            inline=False
-        )
-        await ctx.reply(embed=embed)
+            embed = discord.Embed(
+                colour=3426654,
+                title='chatGPT 🤖',
+                description=f'**Pergunta:** {prompt}'
+            )
+            embed.add_field(
+                name='➭ Resposta',
+                value=text,
+                inline=False
+            )
+            await interaction.edit_original_response(embed=embed)
+
+        except Exception as error:
+            print(error)
 
 
 async def setup(bot):
-    await bot.add_cog(Features(bot))
+    await bot.add_cog(
+        Features(bot)
+    )
