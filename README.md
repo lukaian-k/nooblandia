@@ -7,20 +7,32 @@ project/
 └── src/
     ├── cogs/
     │   ├── interactions/
-	│	│	├── entertainments.py	➭	(game=/, dice=/, ship=/)
-	│	│	└── music.py			➭	(play, queue, skip, stop)
+	│	│	├── entertainments.py
+	│	│	└── music.py
     │   ├── tools/
-	│	│	├── searches.py			➭	(google=/, chat_gpt=/)
-	│	│	├── features.py			➭	(record=/, download=/)
-	│	│	└── generators.py		➭	(password_generator=/, shortlink=/)
+	│	│	├── searches.py
+	│	│	├── features.py
+	│	│	└── generators.py
 	│	├── system/
-	│	│	└── management.py		➭	(on_command_error, help=/, clear=&, send=&, create_channel=&)
+	│	│	└── management.py
 	│	└── math
-	│		└── health.py			➭	(imc=/)
+	│		└── health.py
 	├── reply
 	│	└── defaults.py
     └── system/
         ├── json.py
         ├── ready.py
         └── system.py
+```
+
+### **_cogs methods_**
+
+```
+entertainments.py 	➭	(game=??, dice=/&, ship=/)
+music.py			➭	(play??, queue??, skip??, stop??)
+searches.py			➭	(google=/&, chat_gpt=/)
+features.py			➭	(record=/&, download=/)
+generators.py		➭	(password_generator=&, shortlink=/&)
+management.py		➭	(help=/&, clear=/&, send=&, create_channel=&)
+health.py			➭	(imc=/)
 ```

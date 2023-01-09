@@ -1,8 +1,8 @@
 import discord
 
 from database.directories import *
-
 from src.system.json import *
+
 from src.system.ready import *
 
 from src.reply.defaults import *
@@ -13,10 +13,10 @@ BOT = dict(
 )
 
 class Client(discord.Client):
-    def __init__(self, intents):
+    def __init__(self, intents) -> None:
         super().__init__(intents=intents)
 
-    async def on_ready(self):
+    async def on_ready(self) -> None:
         await self.wait_until_ready()
         await ready(self)
 
@@ -26,7 +26,7 @@ client = Client(
 
 
 @client.event
-async def on_message(message):
+async def on_message(message) -> None:
     if message.author == client.user:
         return
 

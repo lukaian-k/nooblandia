@@ -5,8 +5,9 @@ import os
 import aiohttp
 
 from database.directories import *
-
 from src.system.json import *
+
+from src.system.ready import *
 
 
 BOT = dict(
@@ -14,7 +15,7 @@ BOT = dict(
 )
 
 class Bot(commands.Bot):
-    def __init__(self, command_prefix, intents, application_id):
+    def __init__(self, command_prefix, intents, application_id) -> None:
         super().__init__(
             application_id=application_id,
             command_prefix=command_prefix,
@@ -26,7 +27,7 @@ class Bot(commands.Bot):
         self.synced = False
 
 
-    async def setup_hook(self):
+    async def setup_hook(self) -> None:
         self.session = aiohttp.ClientSession()
 
         DIR_COG = 'src/cogs'
@@ -45,17 +46,30 @@ class Bot(commands.Bot):
         await bot.tree.sync()
 
     
-    async def close(self):
+    async def close(self) -> None:
         await super().close()
         await self.session.close()
 
 
-    async def on_ready(self):
+    async def on_command_error(self, ctx, error) -> None:
+        embed = discord.Embed(
+            colour = 10038562,
+            title=error
+        )
+        await ctx.reply(
+            embed=embed,
+            ephemeral=True,
+            delete_after=20
+        )
+
+
+    async def on_ready(self) -> None:
         await self.wait_until_ready()
 
         if not self.synced:
             self.synced = True
 
+        await ready(self)
         print(f'\nbot.py: ON\n{self.user} connected!')
 
 

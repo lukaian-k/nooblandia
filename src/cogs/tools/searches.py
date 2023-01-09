@@ -15,14 +15,19 @@ class Searches(commands.Cog):
     def __init__(self, bot) -> None:
         self.bot = bot
 
-    @app_commands.command(
+    @commands.hybrid_command(
+        with_app_command=True,
+
         name='google',
-        description='Pesquise rápido no google pelo discord!'
+        description='Pesquise rápido no google pelo discord!',
+
+        help='Pesquise rápido no google pelo discord!',
+        aliases=['g','buscar'],
     )
     @app_commands.describe(
         buscar="O que deseja buscar?",
     )
-    async def google(self, interaction:discord.Interaction, buscar:str) -> None:
+    async def google(self, ctx:commands.Context, *,buscar:str) -> None:
         print(f'\nBusca Por: {buscar}\n')
 
         found = list(
@@ -46,10 +51,7 @@ class Searches(commands.Cog):
             title = f'Aqui estão alguns dos resultados encontrados para ({buscar}):',
             description = f'**{found}**'
         )
-
-        reply = interaction.response
-
-        await reply.send_message(
+        await ctx.reply(
             ephemeral=True,
             embed=embed
         )

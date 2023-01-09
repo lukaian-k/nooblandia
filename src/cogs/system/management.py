@@ -6,27 +6,16 @@ class Management(commands.Cog):
     def __init__(self, bot) -> None:
         self.bot = bot
 
-    @commands.Cog.listener()
-    async def on_command_error(self, ctx, error) -> None:
-        if isinstance(error, commands.errors.CheckFailure):
-            no_permission = 'Você não tem permissão para usar esse comando!'
+    @commands.hybrid_command(
+        with_app_command=True,
 
-            embed = discord.Embed(
-                colour = 10038562,
-                title=f'{no_permission}'
-            )
-            await ctx.send(
-                embed=embed,
-                delete_after=20
-            )
-    
-
-    @commands.command(
         name='help',
-        help='Comando de ajuda',
-        aliases=['h', 'ajuda'],
+        description='Comando de ajuda!',
+
+        help='Comando de ajuda!',
+        aliases=['h','ajuda'],
     )
-    async def help(self, ctx) -> None:
+    async def help(self, ctx:commands.Context) -> None:
         bot = self.bot
         commands = bot.commands
 
@@ -123,24 +112,43 @@ class Management(commands.Cog):
         await ctx.reply(embed=embed)
 
 
-    @commands.command(
+    @commands.hybrid_command(
+        with_app_command=True,
+        
         name='clear',
+        description='Limpa até 100 mensagens do Chat.',
+        
         help='Limpa até 100 mensagens do Chat.',
-        aliases=["apaga","apagar","c"],
+        aliases=['apagar','c'],
     )
     @commands.has_permissions(
         administrator=True,
     )
-    async def clear(self, ctx, amount=99) -> None:
+    async def clear(self, ctx:commands.Context, amount:int=100) -> None:
+        embed = discord.Embed()
+
+        if amount < 2:
+            embed.colour = 15548997
+            embed.title = 'Só é possível apagar 2 ou mais mensagens!'
+
+            await ctx.reply(
+                embed=embed,
+                ephemeral=True,
+                delete_after=20
+            ); return
+
+        await ctx.reply(
+            'https://tenor.com/view/deleted-cat-unsent-unsend-message-gif-26266359',
+            ephemeral=True,
+            delete_after=10
+        )
         message = f'Total de mensagens apagadas: **{amount}**'
 
-        embed = discord.Embed(
-            colour = 15844367,
-            
-            title = 'Mensagens apagadas com sucesso!',
-            description = message
-        )
-        await ctx.channel.purge(limit=amount+1)
+        embed.colour = 15844367
+        embed.title = 'Mensagens apagadas com sucesso!'
+        embed.description = message
+
+        await ctx.channel.purge(limit=amount)
         await ctx.send(
             embed=embed,
             delete_after=20

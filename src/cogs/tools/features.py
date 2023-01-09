@@ -3,6 +3,9 @@ from discord.ext import commands
 from discord import app_commands
 from discord.app_commands import Choice
 
+import pyaudio
+import wave
+
 from youtube_dl import YoutubeDL
 
 from src.system.system import clear_dir
@@ -47,15 +50,19 @@ class Features(commands.Cog):
             await message.delete()
     
 
-    @commands.command(
+    @commands.hybrid_command(
+        with_app_command=True,
+
         name='record',
+        description='Grave audios para enviar no discord!',
+
         help='Grave audios para enviar no discord!',
         aliases=['r','gravar'],
     )
     @commands.has_permissions(
         administrator=True,
     )
-    async def record(self, ctx, duration:int=10) -> None:
+    async def record(self, ctx:commands.Context, duration:int=10) -> None:
         embed = discord.Embed()
         
         if not ctx.author.voice:
@@ -95,7 +102,6 @@ class Features(commands.Cog):
 
         await message.add_reaction('▶')
         await message.add_reaction('❌')
-
 
     async def recording(self, message) -> None:
         ctx = self.ctx

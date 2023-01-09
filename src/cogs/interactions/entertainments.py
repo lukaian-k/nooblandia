@@ -170,15 +170,20 @@ class Entertainments(commands.Cog):
         )
 
 
-    @app_commands.command(
+    @commands.hybrid_command(
+        with_app_command=True,
+
         name='rolar_dados',
-        description='Simula uma jogada de dado.'
+        description='Simula uma jogada de dado.',
+
+        help='Simula uma jogada de dado.',
+        aliases=['d','dice'],
     )
     @app_commands.describe(
         quantos_dados="Quantidade de dados a serem rolados.",
         lados="Quantos lados o dado terá.",
     )
-    async def rolar_dados(self, interaction:discord.Interaction, quantos_dados:int, lados:int) -> None:
+    async def rolar_dados(self, ctx:commands.Context, quantos_dados:int, lados:int) -> None:
         dice = [
             str(
                 choice(
@@ -200,8 +205,7 @@ class Entertainments(commands.Cog):
             title = 'Esses foram os resultados dos lançamentos:',
             description = f'**➭ {dice})**'
         )
-        reply = interaction.response
-        await reply.send_message(embed=embed)
+        await ctx.reply(embed=embed)
 
     
 async def setup(bot) -> None:

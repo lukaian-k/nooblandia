@@ -17,12 +17,13 @@ class Generators(commands.Cog):
     async def password_generator(self, ctx, size:int=16) -> None:
         try:
             caracters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()!"
+            password = "".join(sample(caracters, size))
 
             embed = discord.Embed(
                 colour = 3447003,
 
                 title = 'Aqui está a sua senha!',
-                description = f'➭ Senha gerada: **{"".join(sample(caracters, size))}**'
+                description = f'➭ Senha gerada: **{password}**'
             )
             await ctx.author.send(embed=embed)
             
@@ -39,12 +40,16 @@ class Generators(commands.Cog):
             await ctx.send(embed=embed)
 
 
-    @commands.command(
+    @commands.hybrid_command(
+        with_app_command=True,
+
         name='shortlink',
+        description='Encurta links para você!',
+
         help='Encurta links para você!',
-        aliases=["short","sl","encurtar"],
+        aliases=["short","encurtar"],
     )
-    async def shortlink(self, ctx, link:str) -> None:
+    async def shortlink(self, ctx:commands.Context, *,link:str) -> None:
         short = pyshorteners.Shortener().tinyurl.short(link)
         
         embed = discord.Embed(
