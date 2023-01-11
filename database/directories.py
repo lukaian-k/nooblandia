@@ -4,3 +4,4 @@ DIR_SECRET = {
 }
 
 DIR_DEFAULTS = "database/reply/defaults.json"
+DIR_GUILDS = "database/system/guilds.json"

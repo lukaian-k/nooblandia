@@ -1,7 +1,7 @@
 import discord
 
 
-async def ready(client):
+async def ready(bot):
     activity = {
         "game": discord.Game(
             name='Minecraft',
@@ -31,11 +31,16 @@ async def ready(client):
         ),
     }
 
-    await client.change_presence(
+    await bot.change_presence(
         status=discord.Status.online,
         activity=activity["streaming"]
     )
 
-    print(f'Init: {client.user.name}')
-    print(f'Bot ID: {client.user.id}')
-    print(f'Ping: {round(client.latency*1000)}')
+    print(
+f'''\n
+        ID: {bot.user.id}
+        {bot.user} connected!
+
+        PING: {round(bot.latency*1000)}
+'''
+    )

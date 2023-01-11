@@ -70,7 +70,6 @@ class Bot(commands.Bot):
             self.synced = True
 
         await ready(self)
-        print(f'\nbot.py: ON\n{self.user} connected!')
 
 
 bot = Bot(
