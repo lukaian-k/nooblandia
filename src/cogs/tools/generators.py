@@ -1,8 +1,16 @@
 import discord
 from discord.ext import commands
+from discord import app_commands
+from discord.app_commands import Choice
 
 from random import sample
 import pyshorteners
+
+import openai
+from pprint import pprint
+
+from database.directories import *
+from src.system.json import *
 
 
 class Generators(commands.Cog):
@@ -60,6 +68,64 @@ class Generators(commands.Cog):
         )
         await ctx.reply(embed=embed)
 
+
+    @app_commands.command(
+        name='imagine',
+        description='Crie suas imagens usando o poder da AI do OpenAI aqui pelo discord!'
+    )
+    @app_commands.describe(
+        prompt="Escreva QUASE tudo quiser, e a Inteligencia Artificial irá criar a imagem para você!",
+        size="Defina em px, a largura e altura da imagem",
+    )
+    @app_commands.choices(
+        size = [
+            Choice(
+                name='1024x1024',
+                value=1024
+            ),
+            Choice(
+                name='512x512',
+                value=512
+            ),
+            Choice(
+                name='256x256',
+                value=256
+            )
+        ]
+    )
+    async def dall_e2(self, interaction:discord.Interaction, prompt:str, size:int=1024) -> None:
+        try:
+            await interaction.response.defer()
+            
+            BOT = dict(
+                read_json(DIR_SECRET["SYSTEM"])
+            )
+            openai.api_key = BOT["OPENAI_API_KEY"]
+
+            response = openai.Image.create(
+                prompt=prompt,
+                size=f"{size}x{size}", n=1
+            )
+            output = response['data'][0]['url']; pprint(output)
+
+
+            embed = discord.Embed(
+                colour=3426654,
+                title='DALL・E 2',
+                description=f'**Descrição:** {prompt}',
+                url='https://openai.com/dall-e-2/'
+            )
+            embed.add_field(
+                name='➭ Imagem Gerada',
+                value=f'Tamanho da Imagem: {size}x{size}',
+                inline=False
+            )
+            embed.set_image(url=output)
+            await interaction.edit_original_response(embed=embed)
+
+        except Exception as error:
+            print(error)
+    
 
 async def setup(bot) -> None:
     await bot.add_cog(
