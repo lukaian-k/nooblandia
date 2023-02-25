@@ -6,7 +6,8 @@ from discord.app_commands import Choice
 from random import sample
 import pyshorteners
 
-import openai
+import openai, os
+from dotenv import load_dotenv
 from pprint import pprint
 
 from database.directories import *
@@ -97,10 +98,9 @@ class Generators(commands.Cog):
         try:
             await interaction.response.defer()
             
-            BOT = dict(
-                read_json(DIR_SECRET["SYSTEM"])
-            )
-            openai.api_key = BOT["OPENAI_API_KEY"]
+            load_dotenv()
+            API_KEY = os.getenv("OPENAI_API_KEY")
+            openai.api_key = API_KEY
 
             response = openai.Image.create(
                 prompt=prompt,

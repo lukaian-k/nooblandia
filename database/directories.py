@@ -1,6 +1,5 @@
-DIR_SECRET = {
-    "BOT": "database/secret/bot.json",
-    "SYSTEM": "database/secret/system.json"
+DIR_CONFIG = {
+    "BOT": 'database/config/bot.json',
 }
 
 DIR_DEFAULTS = "database/reply/defaults.json"

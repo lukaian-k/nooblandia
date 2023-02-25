@@ -32,7 +32,7 @@ entertainments.py 	➭	(game=??, dice=/&, ship=/)
 music.py			➭	(play??, queue??, skip??, stop??)
 searches.py			➭	(google=/&, chat_gpt=/)
 features.py			➭	(record=/&, download=/)
-generators.py		➭	(password_generator=&, shortlink=/&)
+generators.py		➭	(password_generator=&, shortlink=/&, dall_e2=/)
 management.py		➭	(help=/&, clear=/&, send=&, create_channel=&)
 health.py			➭	(imc=/)
 ```

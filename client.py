@@ -1,6 +1,9 @@
 import discord
 from discord import app_commands
 
+import os
+from dotenv import load_dotenv
+
 from pprint import pprint
 
 from database.directories import *
@@ -12,11 +15,13 @@ from src.reply.defaults import *
 
 
 BOT = dict(
-    read_json(DIR_SECRET["BOT"])
+    read_json(DIR_CONFIG["BOT"])
 )
 GUILDS_ID = dict(
     read_json(DIR_GUILDS)
 )
+load_dotenv()
+TOKEN = os.getenv("TOKEN")
 
 class Client(discord.Client):
     def __init__(self, intents) -> None:
@@ -79,4 +84,4 @@ f'''
   await reply.send_message(embed=embed)
 
 
-client.run(BOT["TOKEN"])
+client.run(TOKEN)

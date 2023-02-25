@@ -1,8 +1,8 @@
 import discord
 from discord.ext import commands
 
-import os
-import aiohttp
+import os, aiohttp
+from dotenv import load_dotenv
 
 from database.directories import *
 from src.system.json import *
@@ -11,8 +11,10 @@ from src.system.ready import *
 
 
 BOT = dict(
-    read_json(DIR_SECRET["BOT"])
+    read_json(DIR_CONFIG["BOT"])
 )
+load_dotenv()
+TOKEN = os.getenv("TOKEN")
 
 class Bot(commands.Bot):
     def __init__(self, command_prefix, intents, application_id) -> None:
@@ -77,4 +79,4 @@ bot = Bot(
     intents=discord.Intents.all(),
     application_id=BOT["APP_ID"]
 )
-bot.run(BOT["TOKEN"])
+bot.run(TOKEN)

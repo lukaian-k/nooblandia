@@ -4,7 +4,8 @@ from discord import app_commands
 
 from googlesearch import search
 
-import openai
+import openai, os
+from dotenv import load_dotenv
 from pprint import pprint
 
 from database.directories import *
@@ -72,10 +73,9 @@ class Searches(commands.Cog):
             TEMPERATURE = 0.6
             MAX_TOKENS = 150
             
-            BOT = dict(
-                read_json(DIR_SECRET["SYSTEM"])
-            )
-            openai.api_key = BOT["OPENAI_API_KEY"]
+            load_dotenv()
+            API_KEY = os.getenv("OPENAI_API_KEY")
+            openai.api_key = API_KEY
 
             response = openai.Completion.create(
                 model=MODEL,
